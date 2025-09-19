@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La felicidad no tiene 9 letras</title>
+<style>
+    body {
+        background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+        font-family: 'Georgia', serif;
+        color: #4b0082;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        max-width: 800px;
+    }
+    h1 {
+        text-align: center;
+        color: #800080;
+        margin-bottom: 20px;
+        font-size: 2em;
+    }
+    p {
+        font-size: 1.2em;
+        line-height: 1.8;
+    }
+    b.parpadeo {
+        color: #800080;
+        font-weight: bold;
+        animation: parpadeo 1s infinite alternate;
+    }
+    i {
+        display: block;
+        text-align: right;
+        margin-top: 20px;
+        color: #4b0082;
+        font-style: italic;
+        font-size: 1.1em;
+    }
+    @keyframes parpadeo {
+        from { opacity: 1; }
+        to { opacity: 0.4; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>La felicidad no tiene 9 letras 💜</h1>
+    <p id="parrafo1"></p>
+    <p id="parrafo2"></p>
+    <i id="firma"></i>
+</div>
+
+<script>
+const parrafo1 = `Solo basta una sonrisa o tal vez cinco letras K para caer en el deseo de los idealizado, eso son E tus ojos razón de alegría y perdición, alegría de verlos y perdido en ellos. ¿Cómo podría dejar de verlos y verte si mis ojos en ti miran el amor?`;
+
+const parrafo2 = `Y Amo hacerte reir, escucharte, leerte, pensarte, que me pongas el corazón a palpitar al ritmo de tu nombre. Deseo sentir el placer en cada día de tu presencia poder ver L, ¿puedes ver lo que significas para mi?, ¿Cómo puedo explicar que me caigo en pedazos cuando contigo estoy?,  déjame darte de mi dulzura para que sientas lo que siento por ti, no te voy a lastimar, te puedo dar amor, un amor por siempre, un amor hasta el final de mis días. A`;
+
+const letrasParpadeo = ['K','E','Y','L','A']; // Solo estas letras tendrán efecto
+const firma = "Alejandro Malucin";
+
+let i = 0;
+let k = 0;
+
+const p1 = document.getElementById("parrafo1");
+const p2 = document.getElementById("parrafo2");
+const firmaElem = document.getElementById("firma");
+
+function escribirParrafo(texto, elem, callback) {
+    if(i < texto.length){
+        let char = texto.charAt(i);
+        // Solo efecto de parpadeo si char está en arreglo y no es la A de "Amo"
+        if(letrasParpadeo.includes(char) && !(texto === parrafo2 && i === 2 && char === 'A')) {
+            elem.innerHTML += `<b class="parpadeo">${char}</b>`;
+        } else {
+            elem.innerHTML += char;
+        }
+        i++;
+        let delay = 30;
+        if(char === '.' || char === '?' || char === '!'){
+            delay = 500;
+        }
+        setTimeout(() => escribirParrafo(texto, elem, callback), delay);
+    } else {
+        i = 0;
+        callback();
+    }
+}
+
+function escribirFirma() {
+    if(k < firma.length){
+        firmaElem.innerHTML += firma.charAt(k);
+        k++;
+        setTimeout(escribirFirma, 100);
+    }
+}
+
+// Ejecutar: primer párrafo -> segundo párrafo -> firma
+escribirParrafo(parrafo1, p1, () => {
+    escribirParrafo(parrafo2, p2, escribirFirma);
+});
+</script>
+</body>
+</html>
+
+
+
